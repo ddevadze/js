@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Exercise</title>
+</head>
+<body>
+
+    <input id = "inp" type = "text" style="width: 100%;">
+    <div id="list"></div>
+</body>
+<script>
+    async function getData(){
+            let a = await fetch("https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits?fbclid=IwAR1gsPhPkOKzngE5i6TU1jo5ifaIifvJDDLdT2n697UV3v_Q88AvA-p0490");
+            let b = await a.json();
+            return b;
+        }
+    class InputData{
+        constructor(data){
+            this.data = data;
+        }
+        zaza(){
+            let div = document.getElementById("list");
+            div.innerHTML = '';
+            let index = document.getElementById("inp").value;
+            let list;
+            if(this.data=='')
+                list = this.data;
+            else
+                list=this.data.filter(d =>d.commit.message.includes(index));
+            
+            for(let a in list){
+                let c = document.createElement('div');
+                if(a%2===0)
+                    c.style.backgroundColor="#1979a9";
+                else
+                    c.style.backgroundColor="#69bdd2";
+                c.innerHTML = this.data.filter(d =>d.commit.message.includes(index))[a]["commit"]["message"];
+             div.append(c);
+            }
+        }
+        
+        }
+    getData().then(a=>{
+        inputData = new InputData(a);
+        inputData.zaza();
+        document.getElementById("inp").addEventListener("input",function(){inputData.zaza();})
+        });
+</script>
+</html>
