@@ -11,15 +11,15 @@ h1{
     font-family: inherit;
     color: inherit;
 }
+.container {
+    margin: auto;
+    width: 960px;
+}
 .header{
     font-size: 2.5rem;
     font-weight: 500;
     line-height: 1.2;
     font-family: Arial;
-}
-.container {
-    margin: auto;
-    width: 960px;
 }
 .search-section{
     padding-top: 10px;
@@ -34,6 +34,7 @@ h1{
     flex-direction: row;
     justify-content: start;
     align-items: center;
+    overflow: hidden;
 }
 .recent-search-item-container{
     position: relative;
@@ -70,8 +71,7 @@ h1{
 .search{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 395px;
+    flex-wrap: wrap;
 }
 input.search-text{
     width: 178px;
@@ -81,6 +81,7 @@ input.search-text{
     padding-top: 1px;
     padding-bottom: 1px;
     border-width: 2px;
+    margin-right: 5px;
 }
 input.search-button-submit{
     height: 30px;
@@ -91,6 +92,7 @@ input.search-button-submit{
     color: #fff;
     background-color: #28a745;
     border:3px solid #28a745;
+    margin-right: 5px;
 }
 input.search-button-submit:focus{
     border-color: #1dd146;
@@ -104,6 +106,7 @@ input.search-button-ternding{
     color: #fff;
     background-color: #dc3545;
     border:2px solid #dc3545;
+    margin-right: 5px;
 }
 input.search-button-ternding:focus{
     border-color: #f05959;

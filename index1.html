@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
 
     <title>Exercise</title>
 </head>
@@ -12,12 +13,17 @@
             <div >
                 <h1 class="header">Giphy API Example</h1>
                 <div class="recent-searches" id = "recent-searches">
-                    <!-- <input type = "button"; class="recent-search-item"> -->
+                    <div class="recent-searches" id = "recent-searches-default">
+                    </div>
+                    <div class="recent-searches" id = "recent-searches-added">
+                    </div>
                 </div>
                 <div class = "search">
                     <input type = "text" class="search-text" id = "text">
-                    <input type = "button" value="Submit" class="search-button-submit" id = "submit">
-                    <input type = "button" value="See what's trending" class="search-button-ternding" id = "trending">
+                    <div class='search-buttons'>
+                        <input type = "button" value="Submit" class="search-button-submit" id = "submit">
+                        <input type = "button" value="See what's trending" class="search-button-ternding" id = "trending">
+                    </div>
                     
                 </div> 
             </div>
@@ -49,10 +55,10 @@
         const index = document.getElementById("text").value;
         //move to separate function
         let searchList = JSON.parse(localStorage.getItem('searchList'));
+            console.log(searchList.added);
             if(!searchList.added.includes(index)){
-                let searchList = JSON.parse(localStorage.getItem('searchList'));
-                searchList.added.push(index);
-                this._addSearchItem(index);
+                searchList.added.unshift(index);
+                this._addSearchItem(index,'recent-searches-added');
                 localStorage.setItem('searchList', JSON.stringify(searchList));
             }
         this._getData(index,urlDefault).then(a => this._getList(a.data));
@@ -84,7 +90,7 @@
         div.append(divRating);
         document.getElementById('gallery').append(div);
     }
-    _addSearchItem = (value) =>{
+    _addSearchItem = (value,id) =>{
         const inputContainer = document.createElement('div');
         inputContainer.className = 'recent-search-item-container';
         const input = document.createElement('input');
@@ -96,7 +102,7 @@
         closeLogo.className = 'recent-search-item-close';
         inputContainer.append(closeLogo);
         inputContainer.append(input);
-        document.getElementById('recent-searches').append(inputContainer);
+        document.getElementById(id).prepend(inputContainer);
         closeLogo.addEventListener('click',()=>{close(closeLogo);});
         input.addEventListener('click',()=>{this._getData(input.value,urlDefault).then(a => this._getList(a.data));})
     }
@@ -110,13 +116,14 @@
     }
     let dato = new getData();
     let searchList = JSON.parse(localStorage.getItem('searchList'));
+    if(searchList==null){
+        searchList = {added:[],default:[]};
+    }
     searchList.default = ["Internet Cats", "Meme's", "Typing", "Space", "Rick and Morty"];
     localStorage.setItem('searchList', JSON.stringify(searchList));
     for(let a in searchList){
         for(let b in searchList[a]){
-            console.log(searchList[a][b]);
-            dato._addSearchItem(searchList[a][b]);
-            searchList[a][b] = searchList[a][b];
+            dato._addSearchItem(searchList[a][b],'recent-searches-default');
         }
     }
     document.getElementById("submit").addEventListener('click',()=>{dato.onSubmit();});

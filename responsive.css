@@ -1,0 +1,13 @@
+@media all and (max-width: 960px) {
+    .container{
+        width:100%;
+    }
+}
+@media all and (max-width: 404px) {
+    .search{
+        justify-content: space-around;
+    }
+    .search-buttons{
+        padding-top: 10px;
+    }
+}
