@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Exercise</title>
+</head>
+<body>
+    <section class = "search-section">
+        <div class = "container">
+            <div >
+                <h1 class="header">Giphy API Example</h1>
+                <div class="recent-searches" id = "recent-searches">
+                    <!-- <input type = "button"; class="recent-search-item"> -->
+                </div>
+                <div class = "search">
+                    <input type = "text" class="search-text" id = "text">
+                    <input type = "button" value="Submit" class="search-button-submit" id = "submit">
+                    <input type = "button" value="See what's trending" class="search-button-ternding" id = "trending">
+                    
+                </div> 
+            </div>
+        </div>
+    </section>
+    <section class = "gallery-section">
+        <div class = "container">
+            <div class = "gallery" id="gallery">
+
+            </div>
+        </div>
+    </section>
+    <div class="recent-search-item-close">
+    </div>
+</body>
+   
+<script>
+
+    const urlDefault  = 'https://api.giphy.com/v1/gifs/search?limit=10&api_key=aFFKTuSMjd6j0wwjpFCPXZipQbcnw3vB&fmt=json&q=';
+    const urlTrending = 'https://api.giphy.com/v1/gifs/trending?limit=10&api_key=aFFKTuSMjd6j0wwjpFCPXZipQbcnw3vB&fmt=json';
+    // const queryStringParameters = {
+    //     limit: 10,
+    //     api_key: 'aFFKTuSMjd6j0wwjpFCPXZipQbcnw3vB',
+    //     fmt: 'json'
+    // };
+
+    class getData{
+    onSubmit = () => {
+        const index = document.getElementById("text").value;
+        //move to separate function
+        let searchList = JSON.parse(localStorage.getItem('searchList'));
+            if(!searchList.added.includes(index)){
+                let searchList = JSON.parse(localStorage.getItem('searchList'));
+                searchList.added.push(index);
+                this._addSearchItem(index);
+                localStorage.setItem('searchList', JSON.stringify(searchList));
+            }
+        this._getData(index,urlDefault).then(a => this._getList(a.data));
+    }
+    onTrending = () => {
+        this._getData('',urlTrending).then(a => this._getList(a.data));
+    }
+    _getData = async (index,src) =>{
+            const url = src+index;
+            const a = await fetch(url);
+            let b = await a.json();
+            return b;
+        }
+    _getList = (data) => {
+        document.getElementById('gallery').innerHTML='';
+        for(let a in data){
+            this._draw(data[a].images.original.url,data[a].rating);
+        }
+    }
+    _draw = (src,rating) =>{
+        const div = document.createElement('div');
+        div.className = "gallery-item";
+        const img = document.createElement('img');
+        img.src = src;
+        div.append(img);
+        const divRating = document.createElement('div');
+        divRating.className='gallery-item-rating';
+        divRating.innerHTML = `Rating: ${rating}`;
+        div.append(divRating);
+        document.getElementById('gallery').append(div);
+    }
+    _addSearchItem = (value) =>{
+        const inputContainer = document.createElement('div');
+        inputContainer.className = 'recent-search-item-container';
+        const input = document.createElement('input');
+        input.className = "recent-search-item";
+        input.type = 'button';
+        input.id = value;
+        input.value = value;
+        const closeLogo = document.createElement('div');
+        closeLogo.className = 'recent-search-item-close';
+        inputContainer.append(closeLogo);
+        inputContainer.append(input);
+        document.getElementById('recent-searches').append(inputContainer);
+        closeLogo.addEventListener('click',()=>{close(closeLogo);});
+        input.addEventListener('click',()=>{this._getData(input.value,urlDefault).then(a => this._getList(a.data));})
+    }
+    }
+    function close(node){
+        node.parentNode.parentNode.removeChild(node.parentNode);
+        const inputVal = node.nextSibling;
+        let searchList = JSON.parse(localStorage.getItem('searchList'));
+        searchList.added.splice(searchList.added.indexOf(searchList.id),1);
+        localStorage.setItem('searchList', JSON.stringify(searchList));
+    }
+    let dato = new getData();
+    let searchList = JSON.parse(localStorage.getItem('searchList'));
+    searchList.default = ["Internet Cats", "Meme's", "Typing", "Space", "Rick and Morty"];
+    localStorage.setItem('searchList', JSON.stringify(searchList));
+    for(let a in searchList){
+        for(let b in searchList[a]){
+            console.log(searchList[a][b]);
+            dato._addSearchItem(searchList[a][b]);
+            searchList[a][b] = searchList[a][b];
+        }
+    }
+    document.getElementById("submit").addEventListener('click',()=>{dato.onSubmit();});
+    document.getElementById("trending").addEventListener('click',()=>{dato.onTrending();});
+    
+
+</script>
+</html>
