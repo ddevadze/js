@@ -52,7 +52,7 @@ h1{
     position: absolute;
     width: 8px;
     height: 8px;
-    background-image: url('img/logo-close.png');
+    background-image: url('../img/logo-close.png');
     background-size: cover;
     background-repeat: no-repeat;
     right: 13px;
