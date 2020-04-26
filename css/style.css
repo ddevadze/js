@@ -16,7 +16,7 @@ h1{
     width: 960px;
 }
 .header{
-    font-size: 2.5rem;
+    font-size: 50px;
     font-weight: 500;
     line-height: 1.2;
     font-family: Arial;
@@ -27,17 +27,14 @@ h1{
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .recent-searches{
-    height: 62px;
     padding-top: 15px;
-    padding-bottom: 15px;
     display: flex;
     flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    overflow: hidden;
+    flex-wrap: wrap;
 }
 .recent-search-item-container{
     position: relative;
+    padding-bottom: 15px;
 }
 .recent-search-item{
     padding: 0.25rem 0.5rem;
@@ -64,6 +61,7 @@ h1{
     margin: 0px;
     margin-right: 8px;
     border: 2px solid #BFDEFF;
+    transition: 0.2s;
 }
 .recent-search-item-container:hover .recent-search-item-close{
    display: block; 
@@ -82,37 +80,48 @@ input.search-text{
     padding-bottom: 1px;
     border-width: 2px;
     margin-right: 5px;
+    margin-top: 2px;
 }
 input.search-button-submit{
-    height: 30px;
-    padding: 2.5px 5px;
+    padding: 3.5px 8px;
     font-size: 15px;
     line-height: 1.5;
-    border-radius: 0.2rem;
+    border-radius: 3px;
     color: #fff;
     background-color: #28a745;
-    border:3px solid #28a745;
-    margin-right: 5px;
+    margin-right: 7px;
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 input.search-button-submit:focus{
-    border-color: #1dd146;
+    transition: 0.2s;
+    border:2px solid #1dd146;
+    margin-right: 5px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 input.search-button-ternding{
-    height: 30px;
-    padding: 2.5px 5px;
+    padding: 3.5px 8px;
     font-size: 15px;
     line-height: 1.5;
-    border-radius: 0.2rem;
+    border-radius: 3px;
     color: #fff;
     background-color: #dc3545;
-    border:2px solid #dc3545;
-    margin-right: 5px;
+    /* border:3px solid #dc3545; */
+    margin-right: 7px;
+    margin-top: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 input.search-button-ternding:focus{
-    border-color: #f05959;
-}
-.gallery-section{
-
+    transition: 0.2s;
+    border:2px solid #f05959;
+    margin-right: 5px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 .gallery{
     display: flex;

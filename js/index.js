@@ -1,4 +1,4 @@
-import {urlDefault,urlTrending} from "./src.js";
+import {urlDefault,urlTrending} from "./config.js";
 
 class getData{
     constructor(){
